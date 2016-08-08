@@ -1,0 +1,3 @@
+This is a calculator, that I made...
+This calculator allows to do math (addition, subtraction, multiplication, division).
+I am new to C# coding, if you see any bugs, inform me.
