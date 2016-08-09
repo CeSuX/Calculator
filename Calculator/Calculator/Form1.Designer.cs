@@ -58,8 +58,11 @@
             this.OutBox.Location = new System.Drawing.Point(12, 25);
             this.OutBox.Multiline = true;
             this.OutBox.Name = "OutBox";
+            this.OutBox.ReadOnly = true;
+            this.OutBox.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.OutBox.Size = new System.Drawing.Size(215, 33);
             this.OutBox.TabIndex = 0;
+            this.OutBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // ButtonOFF
             // 
@@ -311,9 +314,11 @@
             this.Controls.Add(this.ButtonOFF);
             this.Controls.Add(this.OutBox);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
+            this.KeyPreview = true;
             this.MaximizeBox = false;
             this.Name = "CalculatorWin";
             this.Text = "Calculator";
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Key_Shortcuts);
             this.ResumeLayout(false);
             this.PerformLayout();
 

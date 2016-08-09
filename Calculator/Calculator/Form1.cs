@@ -5,6 +5,10 @@ namespace Calculator
 {
     public partial class CalculatorWin : Form
     {
+        // Global variable for storing the current state of calculator.
+        // (ON/OFF)
+        bool CalcState = true;
+
         public CalculatorWin()
         {
             InitializeComponent();
@@ -32,13 +36,11 @@ namespace Calculator
                     .ToString();
                     break;
                 case '/':
-                    if(OutBox.Text.Length == 0) { return ""; }
                     result = (Convert.ToDecimal(OutBox.Text) /
                     Convert.ToDecimal(Operations.Text.Remove(Operations.Text.Length - 1)))
                     .ToString();
                     break;
             }
-            Operations.ResetText();
             return result;
         }
 
@@ -51,6 +53,7 @@ namespace Calculator
             // * Enables 'OutBox' (TextBox, which outputs the input/result).
             // * Enables math buttons (addition, subtraction, multiplication, division).
             // * Enables number buttons (from 0 to 9).
+            // * Sets variable 'CalcState' to true (enabled).
 
             #region ON/OFF buttons:
             ButtonON.Show();
@@ -87,6 +90,8 @@ namespace Calculator
             Button8.Enabled = true;
             Button9.Enabled = true;
             #endregion
+
+            CalcState = true;
         }
 
         private void ButtonON_Click(object sender, EventArgs e)
@@ -97,6 +102,7 @@ namespace Calculator
             // * Disables 'OutBox' (TextBox, which outputs the input/result).
             // * Disables math buttons (addition, subtraction, multiplication, division).
             // * Disables number buttons (from 0 to 9).
+            // * Sets variable 'CalcState' to false (disabled).
 
             #region ON/OFF buttons:
             ButtonON.Hide();
@@ -133,6 +139,8 @@ namespace Calculator
             Button8.Enabled = false;
             Button9.Enabled = false;
             #endregion
+
+            CalcState = false;
         }
         #endregion
 
@@ -253,5 +261,69 @@ namespace Calculator
             OutBox.Text += 0;
         }
         #endregion
+
+        private void Key_Shortcuts(object sender, KeyEventArgs e)
+        {
+            #region Entry cleaning button key shortcuts.
+            if (e.KeyCode == Keys.Delete || e.KeyCode == Keys.Back)
+            {
+                if (e.Alt) { ButtonCLEAR_Click(sender, e); }
+                else { ButtonDELETE_Click(sender, e); }
+            }
+            #endregion
+
+            #region Number button key shortcuts.
+            if (e.KeyCode == Keys.D0 || e.KeyCode == Keys.NumPad0)
+            { Button0_Click(sender, e); }
+            if (e.KeyCode == Keys.D1 || e.KeyCode == Keys.NumPad1)
+            { Button1_Click(sender, e); }
+            if (e.KeyCode == Keys.D2 || e.KeyCode == Keys.NumPad2)
+            { Button2_Click(sender, e); }
+            if (e.KeyCode == Keys.D3 || e.KeyCode == Keys.NumPad3)
+            { Button3_Click(sender, e); }
+            if (e.KeyCode == Keys.D4 || e.KeyCode == Keys.NumPad4)
+            { Button4_Click(sender, e); }
+            if (e.KeyCode == Keys.D5 || e.KeyCode == Keys.NumPad5)
+            { Button5_Click(sender, e); }
+            if (e.KeyCode == Keys.D6 || e.KeyCode == Keys.NumPad6)
+            { Button6_Click(sender, e); }
+            if (e.KeyCode == Keys.D7 || e.KeyCode == Keys.NumPad7)
+            { Button7_Click(sender, e); }
+            if (e.KeyCode == Keys.D8 || e.KeyCode == Keys.NumPad8)
+            { Button8_Click(sender, e); }
+            if (e.KeyCode == Keys.D9 || e.KeyCode == Keys.NumPad9)
+            { Button9_Click(sender, e); }
+            #endregion
+
+            #region Math button key shortcuts.
+            if (e.KeyCode == Keys.Add)
+            { ButtonAddition_Click(sender, e); }
+            if (e.KeyCode == Keys.Subtract)
+            { ButtonSubtraction_Click(sender, e); }
+            if (e.KeyCode == Keys.Multiply || e.KeyCode == Keys.X)
+            { ButtonMultiplication_Click(sender, e); }
+            if (e.KeyCode == Keys.Divide)
+            { ButtonDivision_Click(sender, e); }
+            if(e.KeyCode == Keys.OemPeriod)
+            { ButtonPeriod_Click(sender, e); }
+            if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Oemplus)
+            { ButtonResult_Click(sender, e); }
+            #endregion
+
+            #region ON/OFF button key shortcuts.
+            if(e.KeyCode == Keys.Escape)
+            {
+                switch(CalcState)
+                {
+                    case true:
+                        ButtonON_Click(sender, e);
+                        break;
+                    case false:
+                        ButtonOFF_Click(sender, e);
+                        break;
+                }
+            }
+            #endregion
+        }
     }
 }
