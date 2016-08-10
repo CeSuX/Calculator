@@ -16,29 +16,31 @@ namespace Calculator
 
         public string Calculate()
         {
+            if (Operations.Text.Length == 0 || OutBox.Text.Length == 0)
+                return OutBox.Text;
+
             string result = string.Empty;
-            if(Operations.Text.Length == 0 || OutBox.Text.Length == 0) { return OutBox.Text; }
-            switch (Operations.Text[Operations.Text.Length - 1])
+            char operation = Operations.Text[Operations.Text.Length - 1];
+
+            decimal[] numbers =
+            {
+                Convert.ToDecimal(OutBox.Text),
+                Convert.ToDecimal(Operations.Text.Remove(Operations.Text.Length - 1))
+            };
+
+            switch (operation)
             {
                 case '+':
-                    result = (Convert.ToDecimal(OutBox.Text) +
-                    Convert.ToDecimal(Operations.Text.Remove(Operations.Text.Length - 1)))
-                    .ToString();
+                    result = (numbers[0] + numbers[1]).ToString();
                     break;
                 case '-':
-                    result = (Convert.ToDecimal(OutBox.Text) -
-                    Convert.ToDecimal(Operations.Text.Remove(Operations.Text.Length - 1)))
-                    .ToString();
+                    result = (numbers[0] - numbers[1]).ToString();
                     break;
                 case 'x':
-                    result = (Convert.ToDecimal(OutBox.Text) *
-                    Convert.ToDecimal(Operations.Text.Remove(Operations.Text.Length - 1)))
-                    .ToString();
+                    result = (numbers[0] * numbers[1]).ToString();
                     break;
                 case '/':
-                    result = (Convert.ToDecimal(OutBox.Text) /
-                    Convert.ToDecimal(Operations.Text.Remove(Operations.Text.Length - 1)))
-                    .ToString();
+                    result = (numbers[0] / numbers[1]).ToString();
                     break;
             }
             return result;
